@@ -31,7 +31,7 @@ exports.getFileById = async (userId, fileId, page, limit) => {
   if (!file) return null;
 
   // Find and count total for pagination
-  const { count } = await File.findAndCountAll({
+  const { count, rows } = await File.findAndCountAll({
     where: { user_id: userId },
     limit,
     offset,
@@ -48,13 +48,6 @@ exports.getFileById = async (userId, fileId, page, limit) => {
 
   return {
     totalFiles: count,
-    data : {
-    id: file.id,
-    original_filename: file.original_filename,
-    title: file.title,
-    description: file.description,
-    status: file.status,
-    extracted_data: file.extracted_data,
-    }
+    data : rows
   };
 };
